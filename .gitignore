@@ -1,0 +1,60 @@
+# SystemVerilog / HDL build outputs
+
+# Common simulator build dirs
+modelsim.ini
+modelsim.wlf
+work/
+transcript
+*.log
+*.jou
+*.do.bak
+
+# Questa/ModelSim/XSIM-like
+*.vcd
+*.ucdb
+coverage/
+coverage_db/
+*.pb
+*.key
+
+# Compiled libraries / snapshots
+*.shm
+*.svh
+
+# (Some flows create these)
+*.run
+*.tmp
+*.dat
+*.cmd
+*.cache
+
+# Verilator (if used)
+obj_dir/
+
+# Synthesis / Implementation runs (Vivado/Quartus/others)
+*.xpr
+*.qpf
+*.qsf
+*.tcl
+vivado*/ 
+*.cache/
+*.runs/
+*.log
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.orig
+
+# Build scripts / local configs (if present in your repo)
+.env
+.local
