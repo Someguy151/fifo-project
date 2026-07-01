@@ -24,41 +24,44 @@ Future phases will introduce assertions, functional coverage, UVM, asynchronous 
 - Target synthesis on the Terasic DE10-Nano FPGA
 - Demonstrate incremental engineering development
 
-## Features 
+## Current Features 
 
-- Parameterized data width 
-- Parameterized FIFO depth 
-- Single clock
-- Active-low reset
-- Read/write enables
+- Synthesizable synchronous FIFO
+- Parameterized DATA_WIDTH
+- Parameterized FIFO_DEPTH 
+- Single clock interface
+- Active-low synchronous reset
+- Read enable
+- Write enable
 - Full flag
 - Empty flag
-- Synthesizable RTL 
 
 ## Project Status 
 
-**Current Phase** 
+Current milestone: 
 
 - Phase 1 -- Basic FIFO RTL 
 
-Upcoming
+Completed
 
-- Directed testbench
-- Scoreboard
-- Functional coverage
-- Assertions
-- FPGA validation
-- UVM
+- Repository structure
+- Requirements document
+- Architecture document
+- FIFO RTL implementation (in progress)
+
+Next milestone
+
+- Directed verification testbench
 
 ## Repository Structure 
 
 ```plaintext
-    rtl/
-    tb/
-    docs/
-    scripts/
-    sim/
-    fpga/
+    rtl/        RTL source files
+    tb/         Testbench
+    docs/       Design documentation
+    scripts/    Simulation/build scripts
+    sim/        Simulation output
+    fpga/       FPGA implementation files
 ```
 
 ## Architecture
@@ -74,52 +77,55 @@ Detailed documentation can be found in:
 
 ### Development Environment 
 
-RTL Language  
-- SystemVerilog
+| Tool | Purpose |
+| --- | --- |
+| SystemVerilog | RTL Design |
+| ModelSim | Simulation |
+| Intel Quartus Prime | Synthesis |
+| Git | Version |
+| GitHub | Project Hosting |
+| Terasic DE10-Nano | FPGA Target |
 
-Simulator  
-- ModelSim 
+## Getting Started
 
-Synthesis 
-- Intel Quartus Prime 
+Clone the repository 
 
-Target FPGA 
-- Terasic DE10-Nano 
+```bash
+git clone https://github.com/Someguy151/fifo-project.git
+cd fifo-project
+```
 
-Version Control 
-- Git 
-- GitHub 
+See the documentation in `docs/` for project requirements and architecture before examining the RTL.
 
 ## Building the Project 
 
-### Simulation 
+Simulation instructions will be added during Phase 2 when the directed testbench is introduced.
 
-Compile RTL 
+## Results 
 
-Compile testbench 
-
-Run simulation 
-
-View waveforms 
-
-## Screenshots 
-
-- 
+Simulation waveforms and FPGA images will be added in future phases.
 
 ## Future Work 
 
 ### Roadmap 
 
-- Scoreboard
-- Functional coverage
-- Assertions
-- Randomized testing
-- UVM
-- Asynchronous FIFO
-- VHDL implementation
+- [x] Requirements
+- [x] Architecture
+- [ ] FIFO RTL
+- [ ] Directed Testbench
+- [ ] Self-checking Scoreboard
+- [ ] Assertions
+- [ ] Functional Coverage
+- [ ] Constrained-Random Verification
+- [ ] UVM Testbench
+- [ ] FPGA Demonstration
 
 ## References 
 
 - IEEE SystemVerilog Language Reference Manual
 - Intel Quartus documentation
 - ModelSim User Guide
+
+## License 
+
+This project is released under the MIT License.
