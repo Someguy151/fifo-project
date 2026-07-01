@@ -15,23 +15,51 @@ Phase 1 focuses on a simple synchronous FIFO suitable for simulation in ModelSim
 
 Features not included in Phase 1 are documented iin the **Out of Scope** section. 
 
-Functional Requirements 
+## 3. Functional Requirements 
 
-Interface Requirements 
+| ID | Requirement | Priority |
+| --- | --- | --- |
+| FR-001 | The FIFO shall store data using First-In, First-Out ordering. | High |
+| FR-002 | The FIFO shall support synchronous write operations. | High |
+| FR-003 | The FIFO shall support synchronous read operations. | High |
+| FR-004 | The FIFO shall prevent writes when full. | High |
+| FR-005 | The FIFO shall prevent reads when empty. | High |
+| FR-006 | The FIFO shall indicate when it is full. | High |
+| FR-007 | The FIFO shall indicate when it is empty. | High |
 
-Parameterization Requirements 
+## 4. Interface Requirements 
 
-Timing Requirements 
+| ID | Requirement | Priority |
+| --- | --- | --- |
+| FR-001 | The | High |
 
-Synthesis Requirements 
+## 5. Parameterization Requirements 
 
-Verification Requirements 
 
-Constraints 
 
-Out of Scope (Phase 1) 
+## 6. Timing Requirements 
 
-Requirement Traceability 
 
-Revision History 
+
+## 7. Synthesis Requirements 
+
+
+
+## 8. Verification Requirements 
+
+
+
+## 9. Constraints 
+
+
+
+## 10. Out of Scope (Phase 1) 
+
+
+
+## 11. Requirement Traceability 
+
+
+
+## 12. Revision History 
 
