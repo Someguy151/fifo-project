@@ -1,9 +1,9 @@
 # FIFO Requirements Specification 
 
 **Project:** SystemVerilog FIFO Design and Verification  
-**Document Version:** 0.1  
+**Document Version:** 0.2  
 **Project Phase:** Phase 1 -- Basic FIFO RTL  
-**Last Updated:** June 30, 2026  
+**Last Updated:** July 1, 2026  
 
 ## 1. Purpose 
 
@@ -13,7 +13,7 @@ This document defines the functional and non-functional requirements for the Pha
 
 Phase 1 focuses on a simple synchronous FIFO suitable for simulation in ModelSim and synthesis in Intel Quartus for Terasic DE10-Nano FPGA. 
 
-Features not included in Phase 1 are documented iin the **Out of Scope** section. 
+Features not included in Phase 1 are documented in the **Out of Scope** section. 
 
 ## 3. Functional Requirements 
 
@@ -26,6 +26,7 @@ Features not included in Phase 1 are documented iin the **Out of Scope** section
 | FR-005 | The FIFO shall prevent reads when empty. | High |
 | FR-006 | The FIFO shall indicate when it is full. | High |
 | FR-007 | The FIFO shall indicate when it is empty. | High |
+| FR-008 | Data shall be read in the same order it was written. | High |
 
 ## 4. Interface Requirements 
 
@@ -38,6 +39,8 @@ Features not included in Phase 1 are documented iin the **Out of Scope** section
 | IF-005 | The FIFO shall provide a data input bus. | High |
 | IF-006 | The FIFO shall provide a data output bus. | High |
 | IF-007 | The FIFO shall provide full and empty status outputs. | High |
+| IF-008 | Data output shall be updated during successful read operations. | High |
+| IF-009 | Full and empty outputs shall reflect the FIFO state after each clock edge. | High |
 
 ## 5. Parameterization Requirements 
 
@@ -45,13 +48,15 @@ Features not included in Phase 1 are documented iin the **Out of Scope** section
 | --- | --- | --- |
 | PR-001 | Data width shall be configurable using a parameter. | High |
 | PR-002 | FIFO depth shall be configurable using a parameter. | High |
+| PR-003 | FIFO depth shall be greater than zero. | Medium |
+| PR-004 | Data width shall be greater than zero. | Medium |
 
 ## 6. Timing Requirements 
 
 | ID | Requirement | Priority |
 | --- | --- | --- |
 | TM-001 | All state changes shall occur on the rising edge of the system clock. | High |
-| TM-002 | Reset shall initialize the FIFO to an empty state. | High |
+| TM-002 | Reset shall clear all internal state, assert `empty`, deassert `full`, and initialize the read and write pointers. | High |
 | TM-003 | Read and write operations shall be synchronous to the system clock. | High |
 
 ## 7. Synthesis Requirements 
@@ -66,12 +71,14 @@ Features not included in Phase 1 are documented iin the **Out of Scope** section
 
 | ID | Requirement | Priority |
 | --- | --- | --- |
-| VR-001 | Reset behavior shall. be verified in simulation. | High |
+| VR-001 | Reset behavior shall be verified in simulation. | High |
 | VR-002 | Write functionality shall be verified. | High |
 | VR-003 | Read functionality shall be verified. | High |
 | VR-004 | Full flag behavior shall be verified. | High |
 | VR-005 | Empty flag behavior shall be verified. | High |
 | VR-006 | FIFO ordering shall be verified. | High |
+| VR-007 | Simultaneous read and write operations shall be verified. | High |
+| VR-008 | Boundary conditions (empty and full transitions) shall be verified. | High |
 
 ## 9. Constraints 
 
@@ -102,16 +109,33 @@ These features are planned for future project phases.
 
 | Requirement | Architecture | RTL | Verification |
 | --- | --- | --- | --- |
-| FR-001 | Planned | Planned | Planned |
-| FR-002 | Planned | Planned | Planned |
-| FR-003 | Planned | Planned | Planned |
-| FR-004 | Planned | Planned | Planned |
-| FR-005 | Planned | Planned | Planned |
-| FR-006 | Planned | Planned | Planned |
-| FR-007 | Planned | Planned | Planned |
+| Functional | Planned | Planned | Planned |
+| Interface | Planned | Planned | Planned |
+| Parameterization | Planned | Planned | Planned |
+| Timing | Planned | Planned | Planned |
+| Synthesis | Planned | Planned | Planned |
+| Verification | Planned | Planned | Planned |
 
-## 12. Revision History 
+## 12. Assumptions 
+
+- Read and write requests are synchronous to the system clock.
+- Input data is valid during write operations.
+- External logic is responsible for observing the `full` and `empty` indicators.
+- Only one clock domain exists in Phase 1. 
+
+## 13. Glossary 
+
+| Term | Definition |
+| --- | --- |
+| FIFO | First-In, First-Out memory buffer |
+| RTL | Register Transfer Level |
+| DUT | Design Under Test |
+| FPGA | Field Programmable Gate Array |
+| Active-low reset | Reset is asserted when the signal is logic 0 |
+
+## 14. Revision History 
 
 | Version | Date | Description |
 | --- | --- | --- |
 | 0.1 | June 30, 2026 | Initial Phase 1 requirements specification |
+| 0.2 | July 1, 2026 | Requirements reviewed |
