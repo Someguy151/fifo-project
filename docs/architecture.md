@@ -4,6 +4,8 @@
 
 This project implements a synthesizable synchronous First-In, First-Out (FIFO) buffer memory in SystemVerilog.
 
+The FIFO is implemented using a parameterized memory array, independent read and write pointers, and status logic that determines the full and empty conditions. All read and write operations occur synchronously on the rising edge of the system clock.
+
 ## 2. Design Objectives 
 
 Phase 1 goals:
@@ -48,7 +50,7 @@ The FIFO will not reorder or modify the stored data.
 
 ## 6. Internal Architecture 
 
-The FIFO is made up of four primary components: 
+The FIFO is composed of the following architectural components: 
 
 ### Memory Array 
 
@@ -69,14 +71,20 @@ The pointer advances when:
 
 ### Read Pointer 
 
-Track the next location to read. 
+Tracks the next location to read. 
 
 The pointer advances when: 
 
 - `rd_en == 1` 
 - `empty == 0` 
 
+**Pointer Width** 
+
+Pointer width is derived from `FIFO_DEPTH` and is sufficient to address every storage location.
+
 ### Status Logic 
+
+Status logic determines whether the FIFO is empty or full by monitoring the current state of the FIFO. The implementation may use pointer comparisons or other equivalent techniques.
 
 Combinational logic generates: 
 
@@ -84,6 +92,14 @@ Combinational logic generates:
 - Empty flag
 
 These outputs prevent invalid writes/reads. 
+
+### Control Logic 
+
+Control logic is responsible for:
+
+- qualifying read/write operations
+- updating pointers
+- updating status flags
 
 ## 7. Block Diagram 
 
@@ -103,10 +119,11 @@ These outputs prevent invalid writes/reads.
                      |  +---------------+   |
                      |         ^            |
                      |         |            |
-                     |  Write Pointer       |
-                     |  Read Pointer        |
+                     |   Write Pointer      |
+                     |    Read Pointer      |
                      |         |            |
-                     |  Status Logic        |
+                     |    Status Logic      |
+                     |   Control Logic      |
                      +----------------------+
     
     Outputs:
@@ -142,7 +159,11 @@ Operation sequence:
 3. Increment the read pointer. 
 4. Update the status flags.
 
-## 10. Reset Behavior 
+## 10. Simultaneous Read/Write
+
+Simultaneous read and write requests may occur on the same clock cycle. Their behavior is defined by the RTL implementation and corresponding requirements specification.
+
+## 11. Reset Behavior 
 
 When `rst_n` is asserted low: 
 
@@ -150,39 +171,51 @@ When `rst_n` is asserted low:
 - Read pointer resets to zero. 
 - FIFO becomes empty.
 - Full flag is cleared. 
-- Output data is reset to a known value (depends on implementation?)
+- `dout` is implementation-defined and should not be considered valid until a successful read occurs.
 
-## 11. Design Assumptions 
+## 12. Design Assumptions 
 
 The initial implementation assumes: 
 
 - One shared clock for read and write operations. 
 - No simultaneous clock-domain crossing. 
 - No overflow or underflow reporting. 
-- No proggrammable thresholds. 
+- No programmable thresholds. 
 - No error corrections. 
 - No almost-full or almost-empty flags. 
 
 May add some of these capabilities to later project phases. 
 
-## 12. Planned Enhancements 
+## 13. Planned Enhancements 
 
 Future revisions are expected to add: 
+
+**RTL Features** 
 
 - Occupancy counter
 - Almost-full flag
 - Almost-empty flag
-- Overflow and underflow detection
-- Assertions (SV Assertions)
+- Overflow detection
+- Underflow detection
+
+**Verification** 
+
+- Assertions
 - Functional coverage
-- Scoreboard-based verification
-- UVM testbench
-- Asynchronous FIFO implementation
+- Scoreboard
+- UVM environment
+
+**Hardware** 
+
 - FPGA demo on the DE10-Nano
 
-## 13. Verification Strategy (Phase 1) 
+## 14. Verification Strategy (Phase 1) 
 
 Verification will use a directed, non-UVM SystemVerilog testbench. 
+
+- Self-checking testbench
+- Directed stimulus
+- Waveform inspection for debugging
 
 Initial test cases include: 
 
@@ -192,13 +225,10 @@ Initial test cases include:
 - Multiple reads
 - Fill FIFO
 - Empty FIFO
-- 
 
-
-Wveforms and self-checking tests will be used to confirm correct operation. 
-
-## 14. Revision History 
+## 15. Revision History 
 
 | Version | Date | Description | 
 | ---- | ---- | ----  |
-| 0.1 | Initial release | Phase 1 synchronous FIFO architecture |
+| 0.1 | June 29, 2026 | Initial Phase 1 architecture document |
+| 0.2 | July 2, 2026 | Architecture reviewed |
