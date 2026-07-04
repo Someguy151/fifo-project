@@ -1,7 +1,7 @@
 module fifo #(
     // fifo parameters
     parameter DATA_WIDTH = 8,
-    parameter FIFO_DEPTH = 16
+    parameter FIFO_DEPTH = 16   // must be a power of 2 for ptr logic
 
 ) (
     // Fifo ports
@@ -21,7 +21,7 @@ module fifo #(
 
     // Interface status outputs
     output logic full,
-    output logic empty,
+    output logic empty
 
 );
 
@@ -38,6 +38,17 @@ module fifo #(
     // FIFO storage
     logic [DATA_WIDTH-1:0] mem [0:FIFO_DEPTH-1];
 
+    // Write logic
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            wr_ptr <= 0;
+        end else begin
+            if (wr_en && !full) begin
+                mem[wr_ptr] <= din;
+                wr_ptr <= wr_ptr + 1'b1;
+            end
+        end
+    end
 
     
 endmodule : fifo
