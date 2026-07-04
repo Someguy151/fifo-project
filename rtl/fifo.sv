@@ -45,7 +45,19 @@ module fifo #(
         end else begin
             if (wr_en && !full) begin
                 mem[wr_ptr] <= din;
-                wr_ptr <= wr_ptr + 1'b1;
+                wr_ptr <= wr_ptr + 1;
+            end
+        end
+    end
+
+    // Read logic
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            rd_ptr <= 0;
+        end else begin
+            if (rd_en && !empty) begin
+                dout <= mem[rd_ptr];
+                rd_ptr = rd_ptr + 1;
             end
         end
     end
