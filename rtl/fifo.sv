@@ -35,6 +35,9 @@ module fifo #(
     logic [ADDR_WIDTH-1:0] wr_ptr;
     logic [ADDR_WIDTH-1:0] rd_ptr; 
 
+    // FIFO storage
+    logic [DATA_WIDTH-1:0] mem [0:FIFO_DEPTH-1];
+
 
     
 endmodule : fifo
